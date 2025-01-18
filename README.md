@@ -102,21 +102,6 @@ Le fichier JSON des missions se trouve dans le dossier `src/data/missions.json`.
 - **API** : Approfondir la compréhension des appels d'API REST, du traitement des réponses JSON et de la gestion des erreurs.
 - **React** : Renforcer mes compétences dans la gestion des états, les hooks, et l'organisation d'un projet React modulaire.
 
----
-
-## Aperçu du Projet
-
-### Système solaire 3D :
-
-![Système solaire 3D](screenshots/SolarSystem.png)
-
-### Page des planètes :
-
-![Page des planètes](screenshots/planetes.png)
-
-### Page des missions :
-
-![Page des missions](screenshots/Missions.png)
 
 ---
 
