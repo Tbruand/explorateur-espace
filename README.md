@@ -108,15 +108,15 @@ Le fichier JSON des missions se trouve dans le dossier `src/data/missions.json`.
 
 ### Système solaire 3D :
 
-\*[Système solaire 3D]\(screenshots/SolarSystem.png)
+![Système solaire 3D](screenshots/SolarSystem.png)
 
 ### Page des planètes :
 
-![Page des planètes]\(screenshots/planetes.png)
+![Page des planètes](screenshots/planetes.png)
 
 ### Page des missions :
 
-![Page des missions]\(screenshots/Missions.png)
+![Page des missions](screenshots/Missions.png)
 
 ---
 
