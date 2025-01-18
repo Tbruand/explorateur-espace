@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# Explorateur de l'Espace 🌌
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+**Explorateur de l'Espace** est un projet interactif visant à explorer le système solaire, les planètes et les missions spatiales. Ce projet a été conçu dans le but d'apprendre à utiliser **Three.js** pour les visualisations 3D, approfondir mes connaissances sur l'utilisation des **API**, et perfectionner mes compétences en **React.js**.
 
-In the project directory, you can run:
+Le projet propose une expérience utilisateur enrichissante avec des éléments visuels en 3D, un système de navigation fluide, et des données provenant d'API et de fichiers JSON.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Fonctionnalités
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Système Solaire en 3D** :
 
-### `npm test`
+  - Visualisation interactive avec **Three.js**.
+  - Zoom directionnel pour explorer les planètes éloignées.
+  - Animation des orbites des planètes à des vitesses réalistes.
+  - Ajout aléatoire de comètes pour plus de dynamisme.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Planètes** :
 
-### `npm run build`
+  - Informations détaillées pour chaque planète.
+  - Modèles 3D rotatifs intégrés dans les cartes des planètes.
+  - Description des caractéristiques physiques (diamètre, température, etc.).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Missions spatiales** :
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  - Affichage des missions spatiales avec un défilement infini.
+  - Données des missions intégrées à partir d'un fichier JSON.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Interface Utilisateur** :
 
-### `npm run eject`
+  - Navbar avec un menu burger pour les écrans mobiles.
+  - Responsive design pour s'adapter à toutes les tailles d'écran.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Pré-requis
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Node.js (v16+ recommandé)
+- npm ou yarn installé sur votre machine
 
-## Learn More
+### Étapes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clonez ce dépôt :
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   git clone https://github.com/Tbruand/explorateur-espace.git
+   cd explorateur-espace
+   ```
 
-### Code Splitting
+2. Installez les dépendances :
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
 
-### Analyzing the Bundle Size
+3. Lancez l'application en mode développement :
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```bash
+   npm start
+   # ou
+   yarn start
+   ```
 
-### Making a Progressive Web App
+4. Accédez à l'application dans votre navigateur à l'adresse : [http://localhost:3000](http://localhost:3000)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Modules utilisés
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **React** : Librairie pour construire l'interface utilisateur.
+- **React Router** : Gestion des routes pour naviguer entre les différentes pages.
+- **Three.js** : Bibliothèque pour la création des visualisations 3D.
+- **Framer Motion** : Animation fluide pour les transitions entre les pages et les éléments.
+- **Tailwind CSS** : Framework CSS pour un design rapide et réactif.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Fichiers importants
 
-### `npm run build` fails to minify
+- `src/components/` : Contient les composants réutilisables (Navbar, Footer, Planet3D, etc.).
+- `src/pages/` : Contient les différentes pages du projet (Accueil, Planètes, Système Solaire, Missions).
+- `src/data/missions.json` : Fichier contenant les données des missions spatiales.
+- `src/utils/` : Fonctions utilitaires, par exemple pour les appels d'API.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Fichiers JSON
+
+Le fichier JSON des missions se trouve dans le dossier `src/data/missions.json`. Il contient des données descriptives et des liens vers les images des missions.
+
+---
+
+## Objectifs pédagogiques
+
+- **Three.js** : Apprendre les bases de la création d'une scène 3D interactive, incluant les lumières, les matériaux et les animations.
+- **API** : Approfondir la compréhension des appels d'API REST, du traitement des réponses JSON et de la gestion des erreurs.
+- **React** : Renforcer mes compétences dans la gestion des états, les hooks, et l'organisation d'un projet React modulaire.
+
+---
+
+## Aperçu du Projet
+
+### Système solaire 3D :
+
+\*[Système solaire 3D]\(screenshots/SolarSystem.png)
+
+### Page des planètes :
+
+![Page des planètes]\(screenshots/planetes.png)
+
+### Page des missions :
+
+![Page des missions]\(screenshots/Missions.png)
+
+---
+
+## Auteur
+
+Si vous avez des suggestions ou des remarques, n'hésitez pas à me contacter via [GitHub](https://github.com/Tbruand).
