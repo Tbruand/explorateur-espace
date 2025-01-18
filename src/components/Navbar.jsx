@@ -1,29 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import PlanetLogo from "../assets/images/planet.svg";
+import { Link } from "react-router-dom"; // Composant pour la navigation entre les pages
+import PlanetLogo from "../assets/images/planet.svg"; // Logo de l'application
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false); // État du menu burger
+  const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture du menu mobile (burger)
 
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */} 
+        {/* Section logo avec lien vers la page d'accueil */}
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center">
             {/* Affichage du logo SVG */}
-            <img
-              src={PlanetLogo}
-              alt="Logo Planet"
-              className="w-8 h-8 mr-2"
-            />
+            <img src={PlanetLogo} alt="Logo Planet" className="w-8 h-8 mr-2" />
             <span className="hidden sm:block text-xl font-bold">
               Explorateur de l'Espace
             </span>
           </Link>
         </div>
 
-        {/* Menu desktop */}
+        {/* Menu de navigation pour desktop */}
         <div className="hidden md:flex space-x-6">
           <Link to="/" className="hover:text-gray-400">
             Accueil
@@ -39,13 +35,13 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Menu burger pour mobile */}
+        {/* Bouton burger pour afficher le menu sur mobile */}
         <div className="md:hidden">
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpen(!isOpen)} // Toggle de l'état d'ouverture
             className="focus:outline-none"
           >
-            {/* Icone du menu burger */}
+            {/* Icône du menu burger ou de fermeture */}
             <svg
               className="w-6 h-6"
               fill="none"
@@ -54,6 +50,7 @@ const Navbar = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               {isOpen ? (
+                // Icône de fermeture (croix)
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -61,6 +58,7 @@ const Navbar = () => {
                   d="M6 18L18 6M6 6l12 12"
                 />
               ) : (
+                // Icône burger (trois lignes)
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -73,13 +71,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Menu mobile (affiché uniquement si isOpen est true) */}
+      {/* Menu mobile affiché uniquement lorsque `isOpen` est true */}
       {isOpen && (
         <div className="md:hidden mt-4 bg-gray-900 p-4 space-y-4">
           <Link
             to="/"
             className="block hover:text-gray-400"
-            onClick={() => setIsOpen(false)} // Ferme le menu après le clic
+            onClick={() => setIsOpen(false)} // Fermer le menu après navigation
           >
             Accueil
           </Link>

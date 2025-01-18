@@ -3,12 +3,13 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const SolarSystem3D = ({ planets }) => {
-  const mountRef = useRef(null);
+  const mountRef = useRef(null); // Référence pour le conteneur de la scène
   const [planetVisibility, setPlanetVisibility] = useState(
-    planets.reduce((acc, planet) => ({ ...acc, [planet.name]: true }), {})
+    planets.reduce((acc, planet) => ({ ...acc, [planet.name]: true }), {}) // Initialisation : toutes les planètes visibles
   );
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768); // Détecte si l'utilisateur est sur un écran desktop
 
+  // Mise à jour de l'état en fonction de la taille de l'écran
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768);
@@ -18,24 +19,28 @@ const SolarSystem3D = ({ planets }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Initialisation de la scène, caméra, renderer et objets 3D
   useEffect(() => {
     const currentMount = mountRef.current;
 
-    // Création de la scène, de la caméra et du renderer
+    // Création de la scène
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      currentMount.clientWidth / currentMount.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.set(0, 40, 80);
 
+    // Configuration de la caméra
+    const camera = new THREE.PerspectiveCamera(
+      75, // Champ de vision
+      currentMount.clientWidth / currentMount.clientHeight, // Ratio d'aspect
+      0.1, // Distance minimale visible
+      1000 // Distance maximale visible
+    );
+    camera.position.set(0, 40, 80); // Position initiale de la caméra
+
+    // Création du renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
-    // Lumières
+    // Ajout des lumières
     const light = new THREE.PointLight(0xffffff, 1.5);
     light.position.set(0, 0, 0);
     scene.add(light);
@@ -43,7 +48,7 @@ const SolarSystem3D = ({ planets }) => {
     const ambientLight = new THREE.AmbientLight(0x808080, 1.5);
     scene.add(ambientLight);
 
-    // Soleil
+    // Soleil (étoile centrale)
     const sunTexture = new THREE.TextureLoader().load("/textures/sun.jpg");
     const sunMaterial = new THREE.MeshStandardMaterial({
       map: sunTexture,
@@ -54,7 +59,7 @@ const SolarSystem3D = ({ planets }) => {
     const sun = new THREE.Mesh(sunGeometry, sunMaterial);
     scene.add(sun);
 
-    // Planètes et leur animation
+    // Création des planètes
     const planetMeshes = [];
     planets.forEach((planet) => {
       const geometry = new THREE.SphereGeometry(planet.size, 32, 32);
@@ -64,23 +69,15 @@ const SolarSystem3D = ({ planets }) => {
         emissiveIntensity: 0.3,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.set(planet.distance, 0, 0);
+      mesh.position.set(planet.distance, 0, 0); // Position initiale en orbite
       scene.add(mesh);
       planetMeshes.push(mesh);
     });
 
-    // OrbitControls
+    // Configuration des OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
+    controls.enableDamping = true; // Damping pour des transitions plus fluides
     controls.dampingFactor = 0.05;
-
-    // Met à jour `controls.target` pour zoomer dans la direction regardée
-    controls.addEventListener("start", () => {
-      const direction = new THREE.Vector3();
-      camera.getWorldDirection(direction);
-      const newTarget = camera.position.clone().add(direction.multiplyScalar(100));
-      controls.target.copy(newTarget);
-    });
 
     // Gestion des comètes
     const cometGeometry = new THREE.SphereGeometry(0.5, 8, 8);
@@ -93,61 +90,64 @@ const SolarSystem3D = ({ planets }) => {
 
       const comet = new THREE.Mesh(cometGeometry, cometMaterial);
       comet.position.set(
-        Math.random() * 300 - 150,
-        Math.random() * 300 - 150,
-        Math.random() * 300 - 150
+        Math.random() * 300 - 150, // Position X aléatoire
+        Math.random() * 300 - 150, // Position Y aléatoire
+        Math.random() * 300 - 150 // Position Z aléatoire
       );
       const velocity = new THREE.Vector3(
         Math.random() * 2 - 1,
         Math.random() * 2 - 1,
         Math.random() * 2 - 1
-      ).normalize();
+      ).normalize(); // Vitesse normalisée
       scene.add(comet);
-      comets.push({ mesh: comet, velocity, life: 300 });
+      comets.push({ mesh: comet, velocity, life: 300 }); // Comète avec durée de vie limitée
     };
 
-    const cometInterval = setInterval(spawnComet, 2000);
+    const cometInterval = setInterval(spawnComet, 2000); // Génère une comète toutes les 2 secondes
 
-    // Animation
+    // Fonction d'animation
     const animate = () => {
       requestAnimationFrame(animate);
 
       const time = Date.now() * 0.0001;
 
+      // Animation des planètes (orbites et rotation)
       planetMeshes.forEach((mesh, index) => {
         const planet = planets[index];
-        const orbitalTime = time * planet.orbitalSpeed;
+        const orbitalTime = time * planet.orbitalSpeed; // Calcule la position en orbite
         const x = planet.distance * Math.cos(orbitalTime);
         const z = planet.distance * Math.sin(orbitalTime);
         mesh.position.set(x, 0, z);
-        mesh.rotation.y += 0.01;
-        mesh.visible = planetVisibility[planet.name];
+        mesh.rotation.y += 0.01; // Rotation sur l'axe Y
+        mesh.visible = planetVisibility[planet.name]; // Affiche ou masque la planète
       });
 
+      // Animation des comètes
       comets.forEach((comet, index) => {
         comet.mesh.position.add(comet.velocity);
         comet.life -= 1;
         if (comet.life <= 0) {
-          scene.remove(comet.mesh);
+          scene.remove(comet.mesh); // Retire la comète lorsque sa durée de vie est écoulée
           comets.splice(index, 1);
         }
       });
 
-      controls.update();
-      renderer.render(scene, camera);
+      controls.update(); // Met à jour les contrôles de la caméra
+      renderer.render(scene, camera); // Rendu de la scène
     };
 
     animate();
 
     // Nettoyage
     return () => {
-      clearInterval(cometInterval);
-      controls.dispose();
-      renderer.dispose();
-      currentMount.removeChild(renderer.domElement);
+      clearInterval(cometInterval); // Arrête la génération de comètes
+      controls.dispose(); // Libère les ressources des OrbitControls
+      renderer.dispose(); // Libère le renderer
+      currentMount.removeChild(renderer.domElement); // Supprime le canvas
     };
   }, [planets, planetVisibility]);
 
+  // Fonction pour basculer la visibilité des planètes
   const togglePlanetVisibility = (planetName) => {
     setPlanetVisibility((prev) => ({
       ...prev,
@@ -157,8 +157,10 @@ const SolarSystem3D = ({ planets }) => {
 
   return (
     <div style={{ position: "relative" }}>
+      {/* Conteneur pour le canvas Three.js */}
       <div ref={mountRef} style={{ width: "100%", height: "800px" }} />
 
+      {/* Interface utilisateur pour gérer la visibilité des planètes (desktop uniquement) */}
       {isDesktop && (
         <div
           className="absolute right-4 top-4 bg-gray-800 p-4 rounded-lg shadow-lg w-64"
@@ -172,10 +174,10 @@ const SolarSystem3D = ({ planets }) => {
                 <input
                   type="checkbox"
                   id={planet.name}
-                  checked={planetVisibility[planet.name]}
+                  checked={planetVisibility[planet.name]} // Gère l'état de visibilité
                   onChange={(e) => {
                     e.stopPropagation();
-                    togglePlanetVisibility(planet.name);
+                    togglePlanetVisibility(planet.name); // Bascule la visibilité
                   }}
                   className="mr-2"
                 />

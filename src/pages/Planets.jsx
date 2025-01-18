@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import Planet3D from "../components/Planet3D";
-import { motion } from "framer-motion";
+import Planet3D from "../components/Planet3D"; // Composant pour afficher une planète en 3D
+import { motion } from "framer-motion"; // Librairie pour des animations fluides
 
+// Configuration de l'élément d'application pour les modales (accessibilité)
 Modal.setAppElement("#root");
 
 const Planets = () => {
+  // État pour suivre la planète sélectionnée
   const [selectedPlanet, setSelectedPlanet] = useState(null);
 
+  // Données des planètes, incluant les informations principales et la texture
   const planets = [
     {
       name: "Mercure",
@@ -94,44 +97,49 @@ const Planets = () => {
   return (
     <motion.div
       className='min-h-screen text-white lg:mx-16'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      initial={{ opacity: 0 }} // Effet d'opacité initial
+      animate={{ opacity: 1 }} // Animation d'apparition
+      transition={{ duration: 1 }} // Durée de l'animation
     >
       <h1 className='text-4xl font-bold text-center py-8'>Les Planètes</h1>
+      {/* Grille d'affichage des cartes des planètes */}
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4'>
         {planets.map((planet) => (
           <div
-            key={planet.name}
+            key={planet.name} // Clé unique pour chaque planète
             className='bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:scale-105 transform transition-transform duration-300'
-            onClick={() => setSelectedPlanet(planet)}
+            onClick={() => setSelectedPlanet(planet)} // Définir la planète sélectionnée au clic
           >
             <h2 className='text-2xl font-bold mb-2'>{planet.name}</h2>
+            {/* Composant 3D pour afficher la texture de la planète */}
             <Planet3D texture={planet.texture} />
           </div>
         ))}
       </div>
 
+      {/* Modale pour afficher les détails d'une planète */}
       {selectedPlanet && (
         <Modal
-          isOpen={!!selectedPlanet}
-          onRequestClose={() => setSelectedPlanet(null)}
+          isOpen={!!selectedPlanet} // La modale s'affiche si une planète est sélectionnée
+          onRequestClose={() => setSelectedPlanet(null)} // Fermer la modale au clic
           className='bg-gray-900 rounded-lg p-8 max-w-4xl mx-auto text-white max-h-[90vh] overflow-y-auto'
           overlayClassName='fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center'
         >
+          {/* Bouton pour fermer la modale */}
           <button
             className='text-red-500 font-bold mb-4 sticky top-0 bg-gray-900 p-2 rounded'
             onClick={() => setSelectedPlanet(null)}
           >
             Fermer
           </button>
+          {/* Contenu principal de la modale */}
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-            {/* Visuel de la planète */}
+            {/* Section visuelle pour afficher la planète en 3D */}
             <div>
               <Planet3D texture={selectedPlanet.texture} />
             </div>
 
-            {/* Contenu descriptif */}
+            {/* Section descriptive avec les détails de la planète */}
             <div>
               <h2 className='text-3xl font-bold mb-4'>{selectedPlanet.name}</h2>
               <p className='mb-4'>{selectedPlanet.description}</p>
@@ -140,16 +148,13 @@ const Planets = () => {
                   <strong>Diamètre :</strong> {selectedPlanet.diameter}
                 </li>
                 <li>
-                  <strong>Distance au Soleil :</strong>{" "}
-                  {selectedPlanet.distance}
+                  <strong>Distance au Soleil :</strong> {selectedPlanet.distance}
                 </li>
                 <li>
-                  <strong>Durée de l'orbite :</strong>{" "}
-                  {selectedPlanet.orbitDuration}
+                  <strong>Durée de l'orbite :</strong> {selectedPlanet.orbitDuration}
                 </li>
                 <li>
-                  <strong>Température moyenne :</strong>{" "}
-                  {selectedPlanet.temperature}
+                  <strong>Température moyenne :</strong> {selectedPlanet.temperature}
                 </li>
                 <li>
                   <strong>Satellites :</strong> {selectedPlanet.satellites}
