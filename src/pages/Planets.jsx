@@ -92,18 +92,21 @@ const Planets = () => {
   ];
 
   return (
-    <motion.div className="min-h-screen text-white lg:mx-16" initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1 }}>
-      <h1 className="text-4xl font-bold text-center py-8">Les Planètes</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+    <motion.div
+      className='min-h-screen text-white lg:mx-16'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <h1 className='text-4xl font-bold text-center py-8'>Les Planètes</h1>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4'>
         {planets.map((planet) => (
           <div
             key={planet.name}
-            className="bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:scale-105 transform transition-transform duration-300"
+            className='bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:scale-105 transform transition-transform duration-300'
             onClick={() => setSelectedPlanet(planet)}
           >
-            <h2 className="text-2xl font-bold mb-2">{planet.name}</h2>
+            <h2 className='text-2xl font-bold mb-2'>{planet.name}</h2>
             <Planet3D texture={planet.texture} />
           </div>
         ))}
@@ -113,16 +116,16 @@ const Planets = () => {
         <Modal
           isOpen={!!selectedPlanet}
           onRequestClose={() => setSelectedPlanet(null)}
-          className="bg-gray-900 rounded-lg p-8 max-w-4xl mx-auto text-white"
-          overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center"
+          className='bg-gray-900 rounded-lg p-8 max-w-4xl mx-auto text-white max-h-[90vh] overflow-y-auto'
+          overlayClassName='fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center'
         >
           <button
-            className="text-red-500 font-bold mb-4"
+            className='text-red-500 font-bold mb-4 sticky top-0 bg-gray-900 p-2 rounded'
             onClick={() => setSelectedPlanet(null)}
           >
             Fermer
           </button>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
             {/* Visuel de la planète */}
             <div>
               <Planet3D texture={selectedPlanet.texture} />
@@ -130,11 +133,9 @@ const Planets = () => {
 
             {/* Contenu descriptif */}
             <div>
-              <h2 className="text-3xl font-bold mb-4">
-                {selectedPlanet.name}
-              </h2>
-              <p className="mb-4">{selectedPlanet.description}</p>
-              <ul className="space-y-2">
+              <h2 className='text-3xl font-bold mb-4'>{selectedPlanet.name}</h2>
+              <p className='mb-4'>{selectedPlanet.description}</p>
+              <ul className='space-y-2'>
                 <li>
                   <strong>Diamètre :</strong> {selectedPlanet.diameter}
                 </li>
