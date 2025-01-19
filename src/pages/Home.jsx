@@ -44,24 +44,33 @@ const Home = () => {
       {/* Afficher les données APOD si elles sont disponibles */}
       {apod ? (
         <div className='w-full max-w-4xl flex flex-col items-center bg-gray-800 bg-opacity-75 p-6 mb-8 rounded-lg shadow-lg'>
-          {/* Titre de l'image */}
+          {/* Titre de l'image ou vidéo */}
           <h2 className='text-3xl font-bold mb-2'>{apod.title}</h2>
-          {/* Date de la photo */}
+          {/* Date de la photo ou vidéo */}
           <p className='text-gray-400 mb-6'>{apod.date}</p>
-          {/* Image du jour */}
-          <img
-            src={apod.url} // URL de l'image
-            alt={apod.title} // Texte alternatif
-            className='rounded-lg shadow-lg mb-6 max-w-md w-full' // Styles de l'image
-          />
-          {/* Explication de l'image */}
+          {/* Image ou vidéo */}
+          {apod.media_type === "video" ? (
+            <iframe
+              src={apod.url}
+              title={apod.title}
+              className='rounded-lg shadow-lg mb-6 max-w-md w-full aspect-video'
+              allow="fullscreen"
+            ></iframe>
+          ) : (
+            <img
+              src={apod.url} // URL de l'image
+              alt={apod.title} // Texte alternatif
+              className='rounded-lg shadow-lg mb-6 max-w-md w-full' // Styles de l'image
+            />
+          )}
+          {/* Explication de l'image ou vidéo */}
           <div className='text-gray-300 text-sm leading-relaxed max-h-64 overflow-y-auto'>
             {apod.explanation}
           </div>
         </div>
       ) : (
         // Message affiché pendant le chargement des données
-        <p className='text-gray-300'>Chargement de l'image du jour...</p>
+        <p className='text-gray-300'>Chargement de l'image ou de la vidéo du jour...</p>
       )}
     </motion.div>
   );
